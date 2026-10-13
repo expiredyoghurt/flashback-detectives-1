@@ -1,0 +1,11 @@
+name = "flashback-detectives-1"
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+
+[assets]
+directory = "./public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "flashback-db"
+database_id = "d081d63e-ebcb-4304-8141-a80036a8f96a"
