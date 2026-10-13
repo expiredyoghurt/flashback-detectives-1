@@ -1,13 +1,14 @@
-# Flashback Detectives
+# Flashback Detectives v1.3
 
-Branching-story practice for P3/4 pupils: **Embedded** (The Lost Puppy), **Classical** (The Old Bicycle) and **Linked** (The New Boy) flashbacks.
+Branching-story practice for P3/4 pupils: 10 stories (4 embedded, 4 linked, 2 classical) plus a sorting game. See CHANGELOG.md.
 Cloudflare Worker + D1 database + static pages (`public/`). Pupils log in with a username and PIN. Teachers use `/teacher.html`.
 
 ## Files
 - `public/index.html`: story selector, login, all three stories
 - `public/notes.html`: notes on the three flashback types
 - `public/teacher.html`: teacher dashboard
-- `src/worker.js`: API (register, login, log, complete, admin summary, reset PIN)
+- `src/worker.js`: API and server-side scoring
+- `src/stories.json`: ALL story content, feedback, points, hints and the sorting extracts (edit this to change or add stories)
 - `schema.sql`: D1 tables (safe to re-run)
 - `.github/workflows/deploy.yml`: auto-deploy on push to `main`
 
@@ -34,5 +35,6 @@ Cloudflare Worker + D1 database + static pages (`public/`). Pupils log in with a
 - In class: pupils read the notes, play one story per lesson, then discuss the reflection answers.
 
 ## Notes
-- Scoring is calculated in the browser, which is fine for a low-stakes classroom tool.
-- Pupil sessions do not expire. Pupil PINs are hashed, but there is no login rate limiting. Add Cloudflare rate-limit rules if you open it beyond your school.
+- Scoring is done on the server. Pupil PINs are hashed, sessions expire, and repeated bad logins are locked out for 10 minutes.
+- Teacher dashboard: filter by class, click a pupil for their choices, comment on writing, assign stories, bulk-create accounts (PINs are shown once), export CSV.
+- Adding a story: copy an entry in `src/stories.json` (each node needs at least one option with `"r":"g"`; `"n"` is the next node, `"sum"` ends the story; `"rt":1` forces a retry). Then redeploy.
